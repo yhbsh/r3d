@@ -5,11 +5,36 @@
    "clang",
    "-O3",
    "main.c",
-   "-I../include",
+   "-I../deps/include",
    "-I../assets",
+   "-L../deps/lib",
+   "-lraylib",
+   "-framework",
+   "Cocoa",
+   "-framework",
+   "IOKit",
    "-o",
    "../bin/main"
   ],
   "file": "main.c"
+ },
+ {
+  "directory": "/Users/home/Dev/c/3D/src",
+  "arguments": [
+   "clang",
+   "-O3",
+   "render.c",
+   "-I../deps/include",
+   "-I../assets",
+   "-L../deps/lib",
+   "-lraylib",
+   "-framework",
+   "Cocoa",
+   "-framework",
+   "IOKit",
+   "-o",
+   "../bin/render"
+  ],
+  "file": "render.c"
  }
 ]
