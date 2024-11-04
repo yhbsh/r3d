@@ -42,7 +42,7 @@ in vec3 Normal;
 out vec4 FragColor;
 
 void main() {
-    vec3 color = vec3(1.0, 1.0, 1.0);
+    vec3 color = vec3(TexCoords, abs(Normal.z));
     FragColor = vec4(color, 1.0);
 }
 )";
@@ -56,7 +56,7 @@ int main(void) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow *window = glfwCreateWindow(800, 800, "Window", NULL, NULL);
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_DEPTH_TEST);
 
