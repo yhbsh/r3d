@@ -2,39 +2,60 @@
  {
   "directory": "/Users/home/Dev/c/3D/src",
   "arguments": [
-   "clang",
+   "clang++",
    "-O3",
-   "main.c",
+   "-std=c++17",
+   "-Wno-deprecated-declarations",
+   "-DGL_SILENCE_DEPRECATION",
    "-I../deps/include",
-   "-I../assets",
+   "opengl.cpp",
+   "-o",
+   "../bin/opengl",
    "-L../deps/lib",
-   "-lraylib",
+   "-lglfw",
    "-framework",
    "Cocoa",
    "-framework",
    "IOKit",
-   "-o",
-   "../bin/main"
+   "-framework",
+   "OpenGL"
   ],
-  "file": "main.c"
+  "file": "opengl.cpp"
  },
  {
   "directory": "/Users/home/Dev/c/3D/src",
   "arguments": [
-   "clang",
+   "clang++",
    "-O3",
-   "render.c",
+   "-std=c++17",
+   "-Wno-deprecated-declarations",
+   "-DGL_SILENCE_DEPRECATION",
    "-I../deps/include",
-   "-I../assets",
+   "png.cpp",
+   "-o",
+   "../bin/png"
+  ],
+  "file": "png.cpp"
+ },
+ {
+  "directory": "/Users/home/Dev/c/3D/src",
+  "arguments": [
+   "clang++",
+   "-O3",
+   "-std=c++17",
+   "-Wno-deprecated-declarations",
+   "-DGL_SILENCE_DEPRECATION",
+   "-I../deps/include",
+   "raylib.cpp",
+   "-o",
+   "../bin/raylib",
    "-L../deps/lib",
    "-lraylib",
    "-framework",
    "Cocoa",
    "-framework",
-   "IOKit",
-   "-o",
-   "../bin/render"
+   "IOKit"
   ],
-  "file": "render.c"
+  "file": "raylib.cpp"
  }
 ]

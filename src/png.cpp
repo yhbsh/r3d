@@ -3,7 +3,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-#include "data.h"
+#include <data.h>
 
 #define IMG_DIM 800
 
@@ -42,13 +42,17 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
 int main(void) {
     unsigned char image[IMG_DIM * IMG_DIM * 3] = {0};
 
-    for (int i = 0; i < FACE_COUNT; i++) {
-        int x1 = transform_x(faces[i].v1->x);
-        int y1 = transform_y(faces[i].v1->y);
-        int x2 = transform_x(faces[i].v2->x);
-        int y2 = transform_y(faces[i].v2->y);
-        int x3 = transform_x(faces[i].v3->x);
-        int y3 = transform_y(faces[i].v3->y);
+    for (int i = 0; i < FACE_COUNT * 3; i += 3) {
+        int v1 = faces[i + 0] * 3;
+        int v2 = faces[i + 1] * 3;
+        int v3 = faces[i + 2] * 3;
+
+        int x1 = transform_x(vertices[v1 + 0]);
+        int y1 = transform_y(vertices[v1 + 1]);
+        int x2 = transform_x(vertices[v2 + 0]);
+        int y2 = transform_y(vertices[v2 + 1]);
+        int x3 = transform_x(vertices[v3 + 0]);
+        int y3 = transform_y(vertices[v3 + 1]);
 
         draw_line(x1, y1, x2, y2, image);
         draw_line(x2, y2, x3, y3, image);

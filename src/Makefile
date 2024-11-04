@@ -1,17 +1,18 @@
-ASSETS_DIR    = ../assets
-INCLUDE_DIR   = ../deps/include
-LIB_DIR       = ../deps/lib
-DATA_H        = $(ASSETS_DIR)/data.h
-SOURCES       = main.c render.c
-LIBS          = -L$(LIB_DIR) -lraylib -framework Cocoa -framework IOKit
-BIN_DIR       = ../bin
-EXECUTABLES   = $(SOURCES:%.c=$(BIN_DIR)/%)
+CFLAGS = -O3 -std=c++17 -Wno-deprecated-declarations -DGL_SILENCE_DEPRECATION -I../deps/include
 
-all: $(EXECUTABLES)
+all: ../bin/gl ../bin/png ../bin/raylib
 
-$(BIN_DIR)/%: %.c $(DATA_H)
-	@mkdir -p $(BIN_DIR)
-	clang -O3 $< -I$(INCLUDE_DIR) -I$(ASSETS_DIR) $(LIBS) -o $@
+../bin/gl: gl.cpp | ../bin
+	clang++ $(CFLAGS) gl.cpp -o ../bin/gl -L../deps/lib -lglfw -framework Cocoa -framework IOKit -framework OpenGL
+
+../bin/png: png.cpp | ../bin
+	clang++ $(CFLAGS) png.cpp -o ../bin/png
+
+../bin/raylib: raylib.cpp | ../bin
+	clang++ $(CFLAGS) raylib.cpp -o ../bin/raylib -L../deps/lib -lraylib -framework Cocoa -framework IOKit
 
 clean:
-	rm -f $(EXECUTABLES)
+	rm -f ../bin/gl ../bin/png ../bin/raylib
+
+../bin:
+	mkdir -p ../bin

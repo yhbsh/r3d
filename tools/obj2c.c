@@ -23,26 +23,20 @@ int main(int argc, const char *argv[]) {
     printf("#define VERT_COUNT %d\n", vert_count);
     printf("#define FACE_COUNT %d\n", face_count);
 
-    printf("typedef struct {\n");
-    printf("    float x, y, z;\n");
-    printf("} Vertex;\n");
-    printf("static Vertex vertices[%d] = {\n", vert_count);
+    printf("static float vertices[%d] = {\n", vert_count * 3);
 
     while (getline(&line, &line_len, file) != -1) {
         if (line[0] != 'v' || line[1] != ' ') continue;
 
         float x, y, z;
         sscanf(line, "v %f %f %f", &x, &y, &z);
-        printf("    {%+9f,%+9f,%+9f},\n", x, y, z);
+        printf("    %+10f,%+10f,%+10f,\n", x, y, z);
     }
     printf("};\n");
 
     rewind(file);
 
-    printf("typedef struct {\n");
-    printf("    Vertex *v1, *v2, *v3;\n");
-    printf("} Face;\n");
-    printf("static Face faces[%d] = {\n", face_count);
+    printf("static unsigned int faces[%d] = {\n", face_count * 3);
 
     while (getline(&line, &line_len, file) != -1) {
         if (line[0] != 'f' || line[1] != ' ') continue;
@@ -54,7 +48,7 @@ int main(int argc, const char *argv[]) {
         v_idx2 -= 1;
         v_idx3 -= 1;
 
-        printf("    {&vertices[%d], &vertices[%d], &vertices[%d]},\n", v_idx1, v_idx2, v_idx3);
+        printf("    %4d, %4d, %4d,\n", v_idx1, v_idx2, v_idx3);
     }
     printf("};\n");
 
