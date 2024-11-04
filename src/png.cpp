@@ -3,7 +3,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-#include <data.h>
+#include <penger.h>
 
 #define IMG_DIM 800
 
@@ -42,7 +42,7 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
 int main(void) {
     unsigned char image[IMG_DIM * IMG_DIM * 3] = {0};
 
-    for (int i = 0; i < FACE_COUNT * 3; i += 3) {
+    for (int i = 0; i < FACES_COUNT * 9; i += 9) {
         int v1 = faces[i + 0] * 3;
         int v2 = faces[i + 1] * 3;
         int v3 = faces[i + 2] * 3;

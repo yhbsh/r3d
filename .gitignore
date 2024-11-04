@@ -1,5 +1,5 @@
 bin
 obj2c
-data.h
+penger.h
 *.ppm
 *.png

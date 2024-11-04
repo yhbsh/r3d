@@ -4,7 +4,7 @@ all: tools src
 
 tools:
 	@make -C tools
-	@./tools/obj2c assets/penger.obj > deps/include/data.h
+	@./tools/obj2c assets/penger.obj > deps/include/penger.h
 
 src: tools
 	@make -C src
