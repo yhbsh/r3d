@@ -42,10 +42,11 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
 int main(void) {
     unsigned char image[IMG_DIM * IMG_DIM * 3] = {0};
 
-    for (int i = 0; i < FACES_COUNT * 9; i += 9) {
-        int v1 = faces[i + 0] * 3;
-        int v2 = faces[i + 1] * 3;
-        int v3 = faces[i + 2] * 3;
+    int vertex_indices_length = sizeof(vertex_indices) / sizeof(vertex_indices[0]);
+    for (int i = 0; i < vertex_indices_length; i += 3) {
+        int v1 = vertex_indices[i + 0] * 3;
+        int v2 = vertex_indices[i + 1] * 3;
+        int v3 = vertex_indices[i + 2] * 3;
 
         int x1 = transform_x(vertices[v1 + 0]);
         int y1 = transform_y(vertices[v1 + 1]);

@@ -36,13 +36,12 @@ void main() {
 const char *fragment_shader_source = R"(
 #version 410 core
 
-in vec2 TexCoords;
 in vec3 Normal;
 
 out vec4 FragColor;
 
 void main() {
-    vec3 color = vec3(TexCoords, abs(Normal.z));
+    vec3 color = normalize(Normal) * 0.5 + 0.5;
     FragColor = vec4(color, 1.0);
 }
 )";
@@ -88,12 +87,6 @@ int main(void) {
     GLuint EBO;
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    unsigned int vertex_indices[FACES_COUNT * 3];
-    for (int i = 0, j = 0; i < FACES_COUNT * 9; i += 9, j += 3) {
-        vertex_indices[j + 0] = faces[i + 0];
-        vertex_indices[j + 1] = faces[i + 1];
-        vertex_indices[j + 2] = faces[i + 2];
-    }
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertex_indices), vertex_indices, GL_STATIC_DRAW);
 
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -115,7 +108,7 @@ int main(void) {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         glUniform1f(glGetUniformLocation(program, "angle"), 2 * glfwGetTime());
-        glDrawElements(GL_TRIANGLES, FACES_COUNT * 3, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(vertex_indices), GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

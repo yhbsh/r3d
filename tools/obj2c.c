@@ -35,7 +35,6 @@ int main(int argc, const char *argv[]) {
     printf("#define VERTICES_COUNT %d\n", vertices_count);
     printf("#define NORMALS_COUNT %d\n", normals_count);
     printf("#define TEXTURE_COORDS_COUNT %d\n", texture_coords_count);
-    printf("#define FACES_COUNT %d\n", faces_count);
     printf("#define MATERIAL_SHININESS %f\n", shininess);
     printf("static const float MATERIAL_AMBIENT[3] = { %f, %f, %f };\n", ambient[0], ambient[1], ambient[2]);
     printf("static const float MATERIAL_SPECULAR[3] = { %f, %f, %f };\n", specular[0], specular[1], specular[2]);
@@ -75,27 +74,48 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static const unsigned int faces[%d] = {\n", faces_count * 9);
+    printf("static const unsigned int vertex_indices[%d] = {\n", faces_count * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (strncmp(line, "f ", 2) != 0) continue;
 
-        int v_idx1 = 0, t_idx1 = 0, n_idx1 = 0;
-        int v_idx2 = 0, t_idx2 = 0, n_idx2 = 0;
-        int v_idx3 = 0, t_idx3 = 0, n_idx3 = 0;
-
-        sscanf(line, "f %d/%d/%d %d/%d/%d %d/%d/%d", &v_idx1, &t_idx1, &n_idx1, &v_idx2, &t_idx2, &n_idx2, &v_idx3, &t_idx3, &n_idx3);
+        int v_idx1 = 0, v_idx2 = 0, v_idx3 = 0;
+        sscanf(line, "f %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &v_idx1, &v_idx2, &v_idx3);
 
         v_idx1 -= 1;
         v_idx2 -= 1;
         v_idx3 -= 1;
+
+        printf("    %4d,%4d,%4d,\n", v_idx1, v_idx2, v_idx3);
+    }
+    printf("};\n");
+
+    printf("static const unsigned int texture_indices[%d] = {\n", faces_count * 3);
+    for (rewind(file); getline(&line, &line_len, file) != -1;) {
+        if (strncmp(line, "f ", 2) != 0) continue;
+
+        int t_idx1 = 0, t_idx2 = 0, t_idx3 = 0;
+        sscanf(line, "f %*d/%d/%*d %*d/%d/%*d %*d/%d/%*d", &t_idx1, &t_idx2, &t_idx3);
+
         t_idx1 -= 1;
         t_idx2 -= 1;
         t_idx3 -= 1;
+
+        printf("    %4d,%4d,%4d,\n", t_idx1, t_idx2, t_idx3);
+    }
+    printf("};\n");
+
+    printf("static const unsigned int normal_indices[%d] = {\n", faces_count * 3);
+    for (rewind(file); getline(&line, &line_len, file) != -1;) {
+        if (strncmp(line, "f ", 2) != 0) continue;
+
+        int n_idx1 = 0, n_idx2 = 0, n_idx3 = 0;
+        sscanf(line, "f %*d/%*d/%d %*d/%*d/%d %*d/%*d/%d", &n_idx1, &n_idx2, &n_idx3);
+
         n_idx1 -= 1;
         n_idx2 -= 1;
         n_idx3 -= 1;
 
-        printf("    %4d,%4d,%4d, %4d,%4d,%4d, %4d,%4d,%4d,\n", v_idx1, v_idx2, v_idx3, t_idx1, t_idx2, t_idx3, n_idx1, n_idx2, n_idx3);
+        printf("    %4d,%4d,%4d,\n", n_idx1, n_idx2, n_idx3);
     }
     printf("};\n");
 
