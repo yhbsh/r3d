@@ -11,7 +11,7 @@ int main(void) {
     SetTargetFPS(180);
 
     while (!WindowShouldClose()) {
-        UpdateCamera(&camera, CAMERA_PERSPECTIVE);
+        UpdateCamera(&camera, CAMERA_ORBITAL);
 
         BeginDrawing();
         {
