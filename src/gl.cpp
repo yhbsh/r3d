@@ -1,6 +1,7 @@
 #define GLFW_INCLUDE_GLCOREARB
 #include <glfw.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include <penger.h>
 
@@ -103,13 +104,18 @@ int main(void) {
     glLinkProgram(program);
     glUseProgram(program);
 
+    int curr_vertices = 0;
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         glUniform1f(glGetUniformLocation(program, "angle"), 2 * glfwGetTime());
-        glDrawElements(GL_TRIANGLES, sizeof(vertex_indices), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, curr_vertices, GL_UNSIGNED_INT, 0);
 
+        if (curr_vertices < sizeof(vertex_indices)) curr_vertices += 1;
+
+        usleep(2000);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
