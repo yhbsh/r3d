@@ -1,0 +1,15 @@
+[
+ {
+  "directory": "/Users/home/Dev/c/3D/src",
+  "arguments": [
+   "clang",
+   "-O3",
+   "main.c",
+   "-I../include",
+   "-I../assets",
+   "-o",
+   "../bin/main"
+  ],
+  "file": "main.c"
+ }
+]

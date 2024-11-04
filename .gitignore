@@ -1,0 +1,5 @@
+bin
+obj2c
+data.h
+*.ppm
+*.png
