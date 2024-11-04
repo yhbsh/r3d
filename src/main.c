@@ -5,20 +5,14 @@
 
 #include "data.h"
 
-#define WIDTH 500
-#define HEIGHT 500
+#define IMG_DIM 800
 
-void plot(int x, int y, unsigned char *image) {
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
-        int index = (y * WIDTH + x) * 3;
-        image[index] = 255;
-        image[index + 1] = 255;
-        image[index + 2] = 255;
-    }
+int transform_x(float x) {
+    return (int)((x + 1.0f) * IMG_DIM / 2.0f);
 }
-
-int transform_x(float x) { return (int)((x + 1.0f) * WIDTH / 2.0f); }
-int transform_y(float y) { return (int)((1.0f - y) * HEIGHT / 2.0f); }
+int transform_y(float y) {
+    return (int)((1.0f - y) * IMG_DIM / 2.0f + IMG_DIM * 0.33);
+}
 
 void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
     int dx = abs(x1 - x0), dy = abs(y1 - y0);
@@ -26,7 +20,12 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
     int err = dx - dy;
 
     while (1) {
-        plot(x0, y0, image);
+        if (x0 >= 0 && x0 < IMG_DIM && y0 >= 0 && y0 < IMG_DIM) {
+            image[(y0 * IMG_DIM + x0) * 3 + 0] = 255;
+            image[(y0 * IMG_DIM + x0) * 3 + 1] = 255;
+            image[(y0 * IMG_DIM + x0) * 3 + 2] = 255;
+        }
+
         if (x0 == x1 && y0 == y1) break;
         int e2 = 2 * err;
         if (e2 > -dy) {
@@ -41,7 +40,7 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
 }
 
 int main(void) {
-    unsigned char image[WIDTH * HEIGHT * 3] = {0};
+    unsigned char image[IMG_DIM * IMG_DIM * 3] = {0};
 
     for (int i = 0; i < FACE_COUNT; i++) {
         int x1 = transform_x(faces[i].v1->x);
@@ -56,7 +55,7 @@ int main(void) {
         draw_line(x3, y3, x1, y1, image);
     }
 
-    stbi_write_png("image.png", WIDTH, HEIGHT, 3, image, WIDTH * 3);
+    stbi_write_png("image.png", IMG_DIM, IMG_DIM, 3, image, IMG_DIM * 3);
 
     return 0;
 }
