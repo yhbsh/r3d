@@ -9,8 +9,8 @@ const char *vertex_shader_source = R"(
 #version 410 core
 
 layout (location = 0) in vec3 position;
-layout (location = 1) in vec2 texture_coords;
-layout (location = 2) in vec3 normals;
+layout (location = 1) in vec2 texcoord;
+layout (location = 2) in vec3 normal;
 
 out vec2 TexCoords;
 out vec3 Normal;
@@ -27,8 +27,8 @@ void main() {
 
     vec3 rotated_position = (rotation_matrix * vec4(position, 1.0)).xyz;
     vec3 translated_position = rotated_position + vec3(0.0, -0.60, 0.0);
-    TexCoords = texture_coords;
-    Normal = normals;
+    TexCoords = texcoord;
+    Normal = normal;
 
     gl_Position = vec4(translated_position, 1.0);
 }
@@ -71,10 +71,10 @@ int main(void) {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (const void *)0);
 
-    GLuint VBO_texture_coords;
-    glGenBuffers(1, &VBO_texture_coords);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_texture_coords);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(texture_coords), texture_coords, GL_STATIC_DRAW);
+    GLuint VBO_texcoords;
+    glGenBuffers(1, &VBO_texcoords);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_texcoords);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texcoords), texcoords, GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (const void *)0);
 

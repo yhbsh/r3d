@@ -11,7 +11,7 @@ int main(int argc, const char *argv[]) {
     char *line = NULL;
     size_t line_len = 0;
 
-    int vertices_count = 0, faces_count = 0, normals_count = 0, texture_coords_count = 0;
+    int vertices_count = 0, faces_count = 0, normals_count = 0, texcoords_count = 0;
     float shininess = 0.0, ambient[3] = {0.0, 0.0, 0.0}, specular[3] = {0.0, 0.0, 0.0};
     float emissive[3] = {0.0, 0.0, 0.0}, index_of_refraction = 0.0, opacity = 1.0;
     int illum_model = 0;
@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (strncmp(line, "v ", 2) == 0) vertices_count++;
         if (strncmp(line, "vn", 2) == 0) normals_count++;
-        if (strncmp(line, "vt", 2) == 0) texture_coords_count++;
+        if (strncmp(line, "vt", 2) == 0) texcoords_count++;
         if (strncmp(line, "f ", 2) == 0) faces_count++;
         if (strncmp(line, "Ns", 2) == 0) sscanf(line, "Ns %f", &shininess);
         if (strncmp(line, "Ka", 2) == 0) sscanf(line, "Ka %f %f %f", &ambient[0], &ambient[1], &ambient[2]);
@@ -34,7 +34,7 @@ int main(int argc, const char *argv[]) {
 
     printf("#define VERTICES_COUNT %d\n", vertices_count);
     printf("#define NORMALS_COUNT %d\n", normals_count);
-    printf("#define TEXTURE_COORDS_COUNT %d\n", texture_coords_count);
+    printf("#define TEXTURE_COORDS_COUNT %d\n", texcoords_count);
     printf("#define MATERIAL_SHININESS %f\n", shininess);
     printf("static const float MATERIAL_AMBIENT[3] = { %f, %f, %f };\n", ambient[0], ambient[1], ambient[2]);
     printf("static const float MATERIAL_SPECULAR[3] = { %f, %f, %f };\n", specular[0], specular[1], specular[2]);
@@ -64,7 +64,7 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static const float texture_coords[%d] = {\n", texture_coords_count * 2);
+    printf("static const float texcoords[%d] = {\n", texcoords_count * 2);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (strncmp(line, "vt", 2) != 0) continue;
 
@@ -89,7 +89,7 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static const unsigned int texture_indices[%d] = {\n", faces_count * 3);
+    printf("static const unsigned int tex_indices[%d] = {\n", faces_count * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (strncmp(line, "f ", 2) != 0) continue;
 
