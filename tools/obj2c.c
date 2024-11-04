@@ -27,7 +27,7 @@ int main(int argc, const char *argv[]) {
     printf("#define TEXTURE_COORDS_COUNT %d\n", texture_coords_count);
     printf("#define FACES_COUNT %d\n", faces_count);
 
-    printf("static float vertices[%d] = {\n", vertices_count * 3);
+    printf("static const float vertices[%d] = {\n", vertices_count * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (line[0] != 'v' || line[1] != ' ') continue;
 
@@ -37,7 +37,7 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static float normals[%d] = {\n", normals_count * 3);
+    printf("static const float normals[%d] = {\n", normals_count * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (line[0] != 'v' || line[1] != 'n' || line[2] != ' ') continue;
 
@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static float texture_coords[%d] = {\n", texture_coords_count * 2);
+    printf("static const float texture_coords[%d] = {\n", texture_coords_count * 2);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (line[0] != 'v' || line[1] != 't' || line[2] != ' ') continue;
 
@@ -57,7 +57,7 @@ int main(int argc, const char *argv[]) {
     }
     printf("};\n");
 
-    printf("static unsigned int faces[%d] = {\n", faces_count * 9);
+    printf("static const unsigned int faces[%d] = {\n", faces_count * 9);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
         if (line[0] != 'f' || line[1] != ' ') continue;
 
