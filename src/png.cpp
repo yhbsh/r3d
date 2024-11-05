@@ -42,18 +42,18 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
 int main(void) {
     unsigned char image[IMG_DIM * IMG_DIM * 3] = {0};
 
-    int vertex_indices_length = sizeof(vertex_indices) / sizeof(vertex_indices[0]);
+    int vertex_indices_length = sizeof(p_indices) / sizeof(p_indices[0]);
     for (int i = 0; i < vertex_indices_length; i += 3) {
-        int v1 = vertex_indices[i + 0] * 3;
-        int v2 = vertex_indices[i + 1] * 3;
-        int v3 = vertex_indices[i + 2] * 3;
+        int v1 = p_indices[i + 0] * 3;
+        int v2 = p_indices[i + 1] * 3;
+        int v3 = p_indices[i + 2] * 3;
 
-        int x1 = transform_x(vertices[v1 + 0]);
-        int y1 = transform_y(vertices[v1 + 1]);
-        int x2 = transform_x(vertices[v2 + 0]);
-        int y2 = transform_y(vertices[v2 + 1]);
-        int x3 = transform_x(vertices[v3 + 0]);
-        int y3 = transform_y(vertices[v3 + 1]);
+        int x1 = transform_x(p_vertices[v1 + 0]);
+        int y1 = transform_y(p_vertices[v1 + 1]);
+        int x2 = transform_x(p_vertices[v2 + 0]);
+        int y2 = transform_y(p_vertices[v2 + 1]);
+        int x3 = transform_x(p_vertices[v3 + 0]);
+        int y3 = transform_y(p_vertices[v3 + 1]);
 
         draw_line(x1, y1, x2, y2, image);
         draw_line(x2, y2, x3, y3, image);
