@@ -1,9 +1,9 @@
 #define GLFW_INCLUDE_GLCOREARB
-#include <glfw.h>
+#include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <unistd.h>
 
-#include <penger.h>
+#include "penger.h"
 
 const char *vertex_shader_source = R"(#version 410 core
 

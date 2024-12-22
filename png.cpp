@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include <stb_image_write.h>
+#include "stb_image_write.h"
 
-#include <penger.h>
+#include "penger.h"
 
 #define IMG_DIM 800
 

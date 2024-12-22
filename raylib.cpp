@@ -1,4 +1,4 @@
-#include "raylib.h"
+#include <raylib.h>
 
 int main(void) {
     SetTraceLogLevel(LOG_NONE);

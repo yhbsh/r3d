@@ -1,15 +1,15 @@
-.PHONY: all clean
+CFLAGS = -O3 -std=c++17 -Wno-deprecated-declarations -DGL_SILENCE_DEPRECATION $(shell pkg-config --cflags --libs glfw3 raylib) -framework OpenGL
 
-all: tools src
+all: bin/gl bin/png bin/raylib
 
-tools:
-	@make -C tools
-	@./tools/obj2c assets/penger.obj > deps/include/penger.h
+bin/gl: gl.cpp
+	clang++ $(CFLAGS) gl.cpp -o bin/gl
 
-src: tools
-	@make -C src
+bin/png: png.cpp
+	clang++ $(CFLAGS) png.cpp -o bin/png
+
+bin/raylib: raylib.cpp | bin
+	clang++ $(CFLAGS) raylib.cpp -o bin/raylib
 
 clean:
-	@make -C tools clean
-	@make -C src clean
-	@rm -f include/data.h
+	rm -rf bin
