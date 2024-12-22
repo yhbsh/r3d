@@ -14,15 +14,20 @@ int main(int argc, const char *argv[]) {
     int vertices = 0, faces = 0, texcoords = 0, normals = 0;
 
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
-        if (strncmp(line, "v ", 2) == 0) vertices++;
-        if (strncmp(line, "f ", 2) == 0) faces++;
-        if (strncmp(line, "vt ", 3) == 0) texcoords++;
-        if (strncmp(line, "vn ", 3) == 0) normals++;
+        if (strncmp(line, "v ", 2) == 0)
+            vertices++;
+        if (strncmp(line, "f ", 2) == 0)
+            faces++;
+        if (strncmp(line, "vt ", 3) == 0)
+            texcoords++;
+        if (strncmp(line, "vn ", 3) == 0)
+            normals++;
     }
 
     printf("static float p_vertices[%d] = {\n", vertices * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
-        if (strncmp(line, "v ", 2) != 0) continue;
+        if (strncmp(line, "v ", 2) != 0)
+            continue;
 
         float x, y, z;
         sscanf(line, "v %f %f %f", &x, &y, &z);
@@ -32,7 +37,8 @@ int main(int argc, const char *argv[]) {
 
     printf("static float p_texcoords[%d] = {\n", texcoords * 2);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
-        if (strncmp(line, "vt ", 3) != 0) continue;
+        if (strncmp(line, "vt ", 3) != 0)
+            continue;
 
         float u, v;
         sscanf(line, "vt %f %f", &u, &v);
@@ -42,7 +48,8 @@ int main(int argc, const char *argv[]) {
 
     printf("static float p_normals[%d] = {\n", normals * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
-        if (strncmp(line, "vn ", 3) != 0) continue;
+        if (strncmp(line, "vn ", 3) != 0)
+            continue;
 
         float x, y, z;
         sscanf(line, "vn %f %f %f", &x, &y, &z);
@@ -52,7 +59,8 @@ int main(int argc, const char *argv[]) {
 
     printf("static unsigned int p_indices[%d] = {\n", faces * 3);
     for (rewind(file); getline(&line, &line_len, file) != -1;) {
-        if (strncmp(line, "f ", 2) != 0) continue;
+        if (strncmp(line, "f ", 2) != 0)
+            continue;
 
         int v_idx1 = 0, v_idx2 = 0, v_idx3 = 0;
         sscanf(line, "f %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &v_idx1, &v_idx2, &v_idx3);

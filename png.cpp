@@ -26,7 +26,8 @@ void draw_line(int x0, int y0, int x1, int y1, unsigned char *image) {
             image[(y0 * IMG_DIM + x0) * 3 + 2] = 255;
         }
 
-        if (x0 == x1 && y0 == y1) break;
+        if (x0 == x1 && y0 == y1)
+            break;
         int e2 = 2 * err;
         if (e2 > -dy) {
             err -= dy;
