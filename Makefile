@@ -1,15 +1,18 @@
-CFLAGS = -O3 -std=c++17 -Wno-deprecated-declarations -DGL_SILENCE_DEPRECATION $(shell pkg-config --cflags --libs glfw3 raylib) -framework OpenGL
+CFLAGS = -O3 -Wno-deprecated-declarations -DGL_SILENCE_DEPRECATION $(shell pkg-config --cflags --libs glfw3 raylib) -framework OpenGL
 
-all: bin/gl bin/png bin/raylib
+all: gl png raylib
 
-bin/gl: gl.cpp
-	clang++ $(CFLAGS) gl.cpp -o bin/gl
+gl: gl.cpp
+	clang++ -std=c++17 $(CFLAGS) gl.cpp -o gl
 
-bin/png: png.cpp
-	clang++ $(CFLAGS) png.cpp -o bin/png
+png: png.c
+	clang $(CFLAGS) png.c -o png
 
-bin/raylib: raylib.cpp | bin
-	clang++ $(CFLAGS) raylib.cpp -o bin/raylib
+raylib: raylib.c
+	clang $(CFLAGS) raylib.c -o raylib
+
+obj2c: obj2c.c
+	clang obj2c.c -o obj2c
 
 clean:
-	rm -rf bin
+	rm -f gl png raylib obj2c
